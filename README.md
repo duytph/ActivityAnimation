@@ -1,3 +1,3 @@
 # ActivityAnimation
 
-A description of this package.
+An object that manages activity animations.
