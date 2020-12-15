@@ -1,52 +1,43 @@
 import UIKit
 import Lottie
 
-/// A view controller that is used to display the  animation.
-final class AnimationViewController: UIViewController, AnimationViewControllable {
-    
-    var animationName: String? = "rainbow-loading-spinner" {
-        didSet {
-            guard animationName != oldValue else { return }
-            let animation = animationName.flatMap { Animation.named($0) }
-            animationView.animation = animation
-        }
-    }
+/// A view controller that is used to display the  animation. It toggles animation on when view will appear and it toggles animation off when view will disappear.
+open class AnimationViewController: UIViewController, AnimationViewControllable {
     
     // MARK: - Dependencies
     
     /// A view used to performs the animation.
-    private(set) lazy var animationView: AnimationView = {
-        let animation = animationName.flatMap { Animation.named($0) }
-        let view = AnimationView(animation: animation)
-        view.contentMode = .center
+    open private(set) lazy var animationView: AnimationView = {
+        let view = AnimationView(name: "rainbow-loading-spinner", bundle: .module)
+        view.contentMode = .scaleAspectFill
         view.loopMode = .loop
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     /// Animation view horizontal center constraint.
-    private(set) lazy var animationViewCenterXAnchor = animationView
+    open private(set) lazy var animationViewCenterXAnchor = animationView
         .centerXAnchor
         .constraint(equalTo: view.centerXAnchor)
     
     /// Animation view vertical center constraint.
-    private(set) lazy var animationViewCenterYAnchor = animationView
+    open private(set) lazy var animationViewCenterYAnchor = animationView
         .centerYAnchor
         .constraint(equalTo: view.centerYAnchor)
     
-    /// Animation view width constraint.
-    private(set) lazy var animationViewWidthAnchor = animationView
+    /// Animation view width constraint, default is equal to 150.
+    open private(set) lazy var animationViewWidthAnchor = animationView
         .widthAnchor
-        .constraint(equalTo: view.widthAnchor)
+        .constraint(equalToConstant: UIScreen.main.fixedCoordinateSpace.bounds.width * 0.3)
     
-    /// Animation view width constraint.
-    private(set) lazy var animationViewHeightAnchor = animationView
+    /// Animation view width constraint, default is equal to 150.
+    open private(set) lazy var animationViewHeightAnchor = animationView
         .heightAnchor
-        .constraint(equalTo: view.heightAnchor)
+        .constraint(equalToConstant: UIScreen.main.fixedCoordinateSpace.bounds.width * 0.3)
     
     // MARK: - Life Cycle
     
-    override func loadView() {
+    override open func loadView() {
         super.loadView()
         
         view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
@@ -59,13 +50,13 @@ final class AnimationViewController: UIViewController, AnimationViewControllable
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         toggle(animation: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         toggle(animation: false)
@@ -73,7 +64,7 @@ final class AnimationViewController: UIViewController, AnimationViewControllable
     
     // MARK: - ActivityIndicatorAnimationViewControllable
     
-    func toggle(animation: Bool) {
+    open func toggle(animation: Bool) {
         if animation {
             animationView.play()
         } else {
