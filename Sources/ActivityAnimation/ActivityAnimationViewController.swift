@@ -1,17 +1,25 @@
 import UIKit
 import Lottie
 
-/// A view controller that is used to display the activity animation.
-final class ActivityAnimationViewController: UIViewController, ActivityAnimationViewControllable {
+/// A view controller that is used to display the  animation.
+final class AnimationViewController: UIViewController, AnimationViewControllable {
+    
+    var animationName: String? = "rainbow-loading-spinner" {
+        didSet {
+            guard animationName != oldValue else { return }
+            let animation = animationName.flatMap { Animation.named($0) }
+            animationView.animation = animation
+        }
+    }
     
     // MARK: - Dependencies
     
-    /// A view is used to animate activity.
+    /// A view used to performs the animation.
     private(set) lazy var animationView: AnimationView = {
-        let view = AnimationView(name: "rainbow-loading-spinner")
-        view.contentMode = .scaleAspectFit
+        let animation = animationName.flatMap { Animation.named($0) }
+        let view = AnimationView(animation: animation)
+        view.contentMode = .center
         view.loopMode = .loop
-        view.frame.size = CGSize(width: 150, height: 150)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -29,12 +37,12 @@ final class ActivityAnimationViewController: UIViewController, ActivityAnimation
     /// Animation view width constraint.
     private(set) lazy var animationViewWidthAnchor = animationView
         .widthAnchor
-        .constraint(equalToConstant: animationView.bounds.width)
+        .constraint(equalTo: view.widthAnchor)
     
     /// Animation view width constraint.
     private(set) lazy var animationViewHeightAnchor = animationView
         .heightAnchor
-        .constraint(equalToConstant: animationView.bounds.height)
+        .constraint(equalTo: view.heightAnchor)
     
     // MARK: - Life Cycle
     
@@ -54,19 +62,19 @@ final class ActivityAnimationViewController: UIViewController, ActivityAnimation
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        toggle(loadingAnimation: true)
+        toggle(animation: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        toggle(loadingAnimation: false)
+        toggle(animation: false)
     }
     
     // MARK: - ActivityIndicatorAnimationViewControllable
     
-    func toggle(loadingAnimation: Bool) {
-        if loadingAnimation {
+    func toggle(animation: Bool) {
+        if animation {
             animationView.play()
         } else {
             animationView.stop()
