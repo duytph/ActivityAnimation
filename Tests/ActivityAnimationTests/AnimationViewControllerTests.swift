@@ -21,7 +21,7 @@ final class AnimationViewControllerTests: XCTestCase {
         XCTAssertFalse(sut.animationView.translatesAutoresizingMaskIntoConstraints)
     }
     
-    // MARK: -
+    // MARK: - Load View
     
     func testLoadView_itConfiguresLayout() throws {
         XCTAssertTrue(sut.animationView.isDescendant(of: sut.view))
@@ -30,6 +30,8 @@ final class AnimationViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.animationViewWidthAnchor.isActive)
         XCTAssertTrue(sut.animationViewHeightAnchor.isActive)
     }
+    
+    // MARK: - View Will Appear
     
     func testViewWillAppear_andAnimationIsNone_itDoesNothing() throws {
         sut.animationView.animation = nil
@@ -45,6 +47,8 @@ final class AnimationViewControllerTests: XCTestCase {
         
         XCTAssertTrue(sut.animationView.isAnimationQueued)
     }
+    
+    // MARK: - View Will Disappear
     
     func testViewWillDisappear_itToggleAnimationOff() throws {
         sut.viewWillDisappear(false)

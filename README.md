@@ -1,3 +1,3 @@
 # ActivityAnimation
 
-An object that manages activity animations.
+An object manages an activity animation.

@@ -1,24 +1,24 @@
 import UIKit
 import Lottie
 
-/// A view controller that is used to display the  animation.
-/// It toggles animation on when view will appear and it toggles animation off when view will disappear.
+/// A view controller is used to display the animation.
+/// It toggles animation on when the view will appear and off when the view will disappear.
 public protocol AnimationViewControllable: UIViewController {
     
-    /// The name of the animation
+    /// A view manages an animation.
     var animationView: AnimationView { get }
     
-    /// Toggle the  animation
+    /// Toggle the available animation on or off.
     func toggle(animation: Bool)
 }
 
-/// An object that manages an activity animation
+/// An object manages an activity animation.
 public protocol ActivityAnimationViewControllable {
     
-    /// A child view controller that is used to display the  animation.
-    /// It toggles animation on when view will appear and it toggles animation off when view will disappear.
+    /// A view controller is used to display the animation.
+    /// It toggles animation on when the view will appear and off when the view will disappear.
     var animationViewController: AnimationViewControllable { get }
     
-    /// Toggle the activity animation
+    /// Toggle the available activity animation on or off.
     func toggle(activityAnimation: Bool)
 }

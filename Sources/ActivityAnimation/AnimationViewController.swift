@@ -1,12 +1,12 @@
 import UIKit
 import Lottie
 
-/// A view controller that is used to display the  animation. It toggles animation on when view will appear and it toggles animation off when view will disappear.
+/// A view controller is used to display the animation.
+/// It toggles animation on when the view will appear and off when the view will disappear.
 open class AnimationViewController: UIViewController, AnimationViewControllable {
     
     // MARK: - Dependencies
     
-    /// A view used to performs the animation.
     open private(set) lazy var animationView: AnimationView = {
         let view = AnimationView(name: "rainbow-loading-spinner", bundle: .module)
         view.contentMode = .scaleAspectFill
@@ -15,22 +15,22 @@ open class AnimationViewController: UIViewController, AnimationViewControllable 
         return view
     }()
     
-    /// Animation view horizontal center constraint.
+    /// An animation view horizontal center constraint.
     open private(set) lazy var animationViewCenterXAnchor = animationView
         .centerXAnchor
         .constraint(equalTo: view.centerXAnchor)
     
-    /// Animation view vertical center constraint.
+    /// An animation view vertical center constraint.
     open private(set) lazy var animationViewCenterYAnchor = animationView
         .centerYAnchor
         .constraint(equalTo: view.centerYAnchor)
     
-    /// Animation view width constraint, default is equal to 150.
+    /// An animation view width constraint, default is equal to 30% of the fixed coordinator space width.
     open private(set) lazy var animationViewWidthAnchor = animationView
         .widthAnchor
         .constraint(equalToConstant: UIScreen.main.fixedCoordinateSpace.bounds.width * 0.3)
     
-    /// Animation view width constraint, default is equal to 150.
+    /// An animation view height constraint, default is equal to 30% of the fixed coordinator space width.
     open private(set) lazy var animationViewHeightAnchor = animationView
         .heightAnchor
         .constraint(equalToConstant: UIScreen.main.fixedCoordinateSpace.bounds.width * 0.3)
